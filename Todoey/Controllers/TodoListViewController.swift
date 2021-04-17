@@ -1,10 +1,3 @@
-//
-//  ViewController.swift
-//  Todoey
-//
-//  Created by Angela Yu on 16/11/2017.
-//  Copyright © 2017 Angela Yu. All rights reserved.
-//
 
 import UIKit
 import CoreData
@@ -12,6 +5,10 @@ import CoreData
 class TodoListViewController: UITableViewController {
     
     var itemArray = [Item]()
+    let defaults = UserDefaults.standard
+    
+    
+    @IBOutlet weak var naslov: UINavigationItem!
     
     var selectedCategory : Category? {
         didSet{
@@ -21,13 +18,82 @@ class TodoListViewController: UITableViewController {
     
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask))
+        
 
         
+        edit.dozvolaZaObavestenja()
+        
+        UNUserNotificationCenter.current().delegate = self
+        
     }
+    
+    
+    
+    let edit = EditViewController()
+    var bojaa: String = ""
+    
+    override func viewWillAppear(_ animated: Bool) {
+        
+        
+        let isDarkMode = UserDefaults.standard.bool(forKey: "isDarkMode")
+        if isDarkMode == false {
+            if #available(iOS 13.0, *) {
+                overrideUserInterfaceStyle = .light
+            } else {
+                // Fallback on earlier versions
+            }
+        }
+        else {
+            if #available(iOS 13.0, *) {
+                overrideUserInterfaceStyle = .dark
+            } else {
+                // Fallback on earlier versions
+            }
+        }
+        
+        
+        bojaa = defaults.string(forKey: "NavBoja") ?? "Siva"
+        self.navigationController?.navigationBar.barTintColor = vratiBoju()
+        
+        naslov.title = defaults.string(forKey: "Ime") ?? "ToDo"
+    }
+    
+    
+    @IBAction func editPressed(_ sender: UIBarButtonItem) {
+        self.performSegue(withIdentifier: "goToEdit", sender: self)
+    }
+    
+    
+    func vratiBoju() -> UIColor{
+        switch bojaa {
+        case "Siva":
+            return UIColor.gray
+        case "Crna":
+            return UIColor.black
+        case "Zelena":
+            return UIColor.green
+        case "Ljubicasta":
+            return UIColor.purple
+        case "Roze":
+            return UIColor.systemPink
+        case "Zuta":
+            return UIColor.yellow
+        case "Narandzasta":
+            return UIColor.orange
+        case "Plava":
+            return UIColor.blue
+        default:
+            return UIColor.gray
+        }
+    }
+    
+    
     
     //MARK: - Tableview Datasource Methods
     
@@ -43,9 +109,6 @@ class TodoListViewController: UITableViewController {
         
         cell.textLabel?.text = item.title
         
-        //Ternary operator ==>
-        // value = condition ? valueIfTrue : valueIfFalse
-        
         cell.accessoryType = item.done ? .checkmark : .none
         
         return cell
@@ -53,18 +116,28 @@ class TodoListViewController: UITableViewController {
     
     //MARK: - TableView Delegate Methods
     
+    
+    // za CEKIRANJE
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
 
-//        context.delete(itemArray[indexPath.row])
-//        itemArray.remove(at: indexPath.row)
-        
         itemArray[indexPath.row].done = !itemArray[indexPath.row].done
 
         saveItems()
-        
+
         tableView.deselectRow(at: indexPath, animated: true)
-        
+
+    }
+    
+    // OVO JE FJA ZA BRISANJE
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete{
+            context.delete(itemArray[indexPath.row])
+            itemArray.remove(at: indexPath.row)
+            
+            saveItems()
+            //edit.uspesnoSacuvano()
+            edit.obrisanoIzBaze()
+        }
     }
     
     //MARK: - Add New Items
@@ -73,9 +146,9 @@ class TodoListViewController: UITableViewController {
         
         var textField = UITextField()
         
-        let alert = UIAlertController(title: "Add New Todoey Item", message: "", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Dodaj novu stavku", message: "", preferredStyle: .alert)
         
-        let action = UIAlertAction(title: "Add Item", style: .default) { (action) in
+        let action = UIAlertAction(title: "Dodaj", style: .default) { (action) in
             //what will happen once the user clicks the Add Item button on our UIAlert
             
             
@@ -86,10 +159,11 @@ class TodoListViewController: UITableViewController {
             self.itemArray.append(newItem)
             
             self.saveItems()
+            self.edit.uspesnoSacuvano()
         }
         
         alert.addTextField { (alertTextField) in
-            alertTextField.placeholder = "Create new item"
+            alertTextField.placeholder = "Kreiraj novu stavku"
             textField = alertTextField
             
         }
@@ -107,6 +181,7 @@ class TodoListViewController: UITableViewController {
         
         do {
           try context.save()
+            
         } catch {
            print("Error saving context \(error)")
         }
@@ -124,7 +199,6 @@ class TodoListViewController: UITableViewController {
             request.predicate = categoryPredicate
         }
 
-        
         do {
             itemArray = try context.fetch(request)
         } catch {
@@ -134,6 +208,8 @@ class TodoListViewController: UITableViewController {
         tableView.reloadData()
         
     }
+    
+    
     
 }
 
@@ -166,6 +242,33 @@ extension TodoListViewController: UISearchBarDelegate {
 }
 
 
+
+extension TodoListViewController: UNUserNotificationCenterDelegate {
+
+    //for displaying notification when app is in foreground
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+
+        //If you don't want to show notification when app is open, do something here else and make a return here.
+        //Even you you don't implement this delegate method, you will not see the notification on the specified controller. So, you have to implement this delegate and make sure the below line execute. i.e. completionHandler.
+
+        completionHandler([.alert, .badge, .sound])
+    }
+
+    // For handling tap and user actions
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+
+        switch response.actionIdentifier {
+        case "action1":
+            print("Action First Tapped")
+        case "action2":
+            print("Action Second Tapped")
+        default:
+            break
+        }
+        completionHandler()
+    }
+
+}
 
 
 

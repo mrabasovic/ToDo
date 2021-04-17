@@ -1,30 +1,80 @@
-//
-//  AppDelegate.swift
-//  Todoey
-//
-//  Created by Angela Yu on 16/11/2017.
-//  Copyright © 2017 Angela Yu. All rights reserved.
-//
 
 import UIKit
 import CoreData
+import UserNotifications
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+ class AppDelegate: UIResponder, UIApplicationDelegate {
 
+    let notificationCenter = UNUserNotificationCenter.current()
     var window: UIWindow?
 
 
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool { // kod any mozda treba?
+        
+        //notificationCenter.delegate = self
+        
+        print("Ovo je putanja do user defaults: \(NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).last! as String)")
+        // samo sto nije documents nego library/preferences
+        
+        let options: UNAuthorizationOptions = [.alert, .sound, .badge]
+        
+        notificationCenter.requestAuthorization(options: options) {
+            (didAllow, error) in
+            if !didAllow {
+                print("User has declined notifications")
+            }
+        }
+        let todo = TodoListViewController()
+        
+        UINavigationBar.appearance().barTintColor = todo.vratiBoju()
+        UINavigationBar.appearance().tintColor = todo.vratiBoju()
         
         return true
     }
 
 
+    
+    
     func applicationWillTerminate(_ application: UIApplication) {
 
         self.saveContext()
     }
+    
+    // ove dve ispod su za notifikacije
+//    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+//            // Override point for customization after application launch.
+//            registerForRichNotifications()
+//            return true
+//        }
+    
+    func registerForRichNotifications() {
+
+           UNUserNotificationCenter.current().requestAuthorization(options: [.alert,.badge,.sound]) { (granted:Bool, error:Error?) in
+                if error != nil {
+                    print(error?.localizedDescription)
+                }
+                if granted {
+                    print("Permission granted")
+                } else {
+                    print("Permission not granted")
+                }
+            }
+
+            //actions defination
+            let action1 = UNNotificationAction(identifier: "action1", title: "Action First", options: [.foreground])
+            let action2 = UNNotificationAction(identifier: "action2", title: "Action Second", options: [.foreground])
+
+            let category = UNNotificationCategory(identifier: "actionCategory", actions: [action1,action2], intentIdentifiers: [], options: [])
+
+            UNUserNotificationCenter.current().setNotificationCategories([category])
+
+        }
+
+    func application(application: UIApplication, didReceiveLocalNotification notification: UILocalNotification) {
+        print("Local notification received (tapped, or while app in foreground): \(notification)")
+    }
+    
     
     // MARK: - Core Data stack
     
@@ -57,5 +107,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
 
+}
+
+extension AppDelegate: UNUserNotificationCenterDelegate {
+
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        print(response.notification.request.content.userInfo)
+        completionHandler()
+    }
+
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        completionHandler([.alert, .badge, .sound])
+    }
 }
 

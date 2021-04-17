@@ -12,8 +12,11 @@
 		AD9E197B1FBDA0FD009CCEEA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9E197A1FBDA0FD009CCEEA /* AppDelegate.swift */; };
 		AD9E197D1FBDA0FD009CCEEA /* TodoListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9E197C1FBDA0FD009CCEEA /* TodoListViewController.swift */; };
 		AD9E19801FBDA0FD009CCEEA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AD9E197E1FBDA0FD009CCEEA /* Main.storyboard */; };
-		AD9E19821FBDA0FD009CCEEA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AD9E19811FBDA0FD009CCEEA /* Assets.xcassets */; };
 		AD9E19851FBDA0FD009CCEEA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AD9E19831FBDA0FD009CCEEA /* LaunchScreen.storyboard */; };
+		B63FC9D9259C96E90007193C /* EditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63FC9D8259C96E90007193C /* EditViewController.swift */; };
+		B69834D3258B57FD006ADE30 /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = B69834D2258B57FD006ADE30 /* Notifications.swift */; };
+		B6D4F82325AB724700B87C6D /* checkmark.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B6D4F82225AB724700B87C6D /* checkmark.jpg */; };
+		B6EB12AB25AD1D6A007DDEF2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B6EB12AA25AD1D6A007DDEF2 /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,9 +26,12 @@
 		AD9E197A1FBDA0FD009CCEEA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AD9E197C1FBDA0FD009CCEEA /* TodoListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoListViewController.swift; sourceTree = "<group>"; };
 		AD9E197F1FBDA0FD009CCEEA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		AD9E19811FBDA0FD009CCEEA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AD9E19841FBDA0FD009CCEEA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		AD9E19861FBDA0FD009CCEEA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B63FC9D8259C96E90007193C /* EditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditViewController.swift; sourceTree = "<group>"; };
+		B69834D2258B57FD006ADE30 /* Notifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notifications.swift; sourceTree = "<group>"; };
+		B6D4F82225AB724700B87C6D /* checkmark.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = checkmark.jpg; sourceTree = "<group>"; };
+		B6EB12AA25AD1D6A007DDEF2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = ../../../../Downloads/AppIcons/Assets.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -42,7 +48,8 @@
 		AD79462B1FCED8D40031D617 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				AD9E19811FBDA0FD009CCEEA /* Assets.xcassets */,
+				B6EB12AA25AD1D6A007DDEF2 /* Assets.xcassets */,
+				B6D4F82225AB724700B87C6D /* checkmark.jpg */,
 				AD9E19831FBDA0FD009CCEEA /* LaunchScreen.storyboard */,
 			);
 			path = "Supporting Files";
@@ -53,6 +60,7 @@
 			children = (
 				AD0968A91FD17AC20008922D /* CategoryViewController.swift */,
 				AD9E197C1FBDA0FD009CCEEA /* TodoListViewController.swift */,
+				B63FC9D8259C96E90007193C /* EditViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -98,6 +106,7 @@
 				AD79462E1FCED9160031D617 /* Views */,
 				AD79462B1FCED8D40031D617 /* Supporting Files */,
 				AD9E19861FBDA0FD009CCEEA /* Info.plist */,
+				B69834D2258B57FD006ADE30 /* Notifications.swift */,
 			);
 			path = Todoey;
 			sourceTree = "<group>";
@@ -163,8 +172,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				AD9E19851FBDA0FD009CCEEA /* LaunchScreen.storyboard in Resources */,
-				AD9E19821FBDA0FD009CCEEA /* Assets.xcassets in Resources */,
+				B6D4F82325AB724700B87C6D /* checkmark.jpg in Resources */,
 				AD9E19801FBDA0FD009CCEEA /* Main.storyboard in Resources */,
+				B6EB12AB25AD1D6A007DDEF2 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -175,7 +185,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B69834D3258B57FD006ADE30 /* Notifications.swift in Sources */,
 				AD0968AA1FD17AC20008922D /* CategoryViewController.swift in Sources */,
+				B63FC9D9259C96E90007193C /* EditViewController.swift in Sources */,
 				AD9E197D1FBDA0FD009CCEEA /* TodoListViewController.swift in Sources */,
 				AD3197CC1FD0213E00995E07 /* DataModel.xcdatamodeld in Sources */,
 				AD9E197B1FBDA0FD009CCEEA /* AppDelegate.swift in Sources */,
@@ -208,6 +220,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "";
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -267,6 +280,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "";
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -318,12 +332,11 @@
 		AD9E198A1FBDA0FD009CCEEA /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 3ECFYJZ64T;
+				DEVELOPMENT_TEAM = A97JM4532B;
 				INFOPLIST_FILE = Todoey/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.londonappbrewery.Todoey;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ldtjrt44.Todoey;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -333,12 +346,11 @@
 		AD9E198B1FBDA0FD009CCEEA /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 3ECFYJZ64T;
+				DEVELOPMENT_TEAM = A97JM4532B;
 				INFOPLIST_FILE = Todoey/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.londonappbrewery.Todoey;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ldtjrt44.Todoey;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
