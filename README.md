@@ -1,2 +1,2 @@
 # ToDo
-ToDo app with CoreData
+ToDo app with CoreData and Notifications
